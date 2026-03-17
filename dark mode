@@ -1,0 +1,116 @@
+<!-- Dark Mode Toggle -->
+
+<button id="my-unique-theme-toggle" aria-label="Toggle theme" onclick="toggleDarkMode()">
+    <div class="icon-moon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24">
+            <path d="M21 12.79A9 9 0 1111.21 3a7 7 0 1010.8 9.79z"></path>
+        </svg>
+    </div>
+    <div class="icon-sun" style="display: none;">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" width="24" height="24">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+    </div>
+</button>
+
+<script>
+    function applyTheme(isDarkMode) {
+        const moonIcon = document.querySelector('#my-unique-theme-toggle .icon-moon');
+        const sunIcon = document.querySelector('#my-unique-theme-toggle .icon-sun');
+        const body = document.body;
+        
+        // Apply a temporary transition for the switch
+        body.style.transition = "background-color 0.9s ease, color 0.9s ease";
+
+        if (isDarkMode) {
+            body.style.setProperty('background-color', '#191919', 'important');
+            body.style.setProperty('color', '#ffffff', 'important');
+
+            let style = document.getElementById("dark-mode-overrides");
+            if (!style) {
+                style = document.createElement('style');
+                style.id = "dark-mode-overrides";
+                document.head.appendChild(style);
+            }
+
+            style.innerHTML = `
+                header, nav, footer, .gh-head, .gh-foot, .site-header, .site-footer, .gh-navigation { 
+                    background-color: #191919 !important; 
+                    transition: background-color 0.3s ease !important;
+                }
+                .gh-navigation-actions, .gh-navigation-actions *, .gh-search, .gh-search-input, .gh-nav-search {
+                    background-color: #191919 !important;
+                    background: #191919 !important;
+                    color: #ffffff !important;
+                    border: none !important;
+                    box-shadow: none !important;
+                    transition: all 0.3s ease !important;
+                }
+                .gh-navigation-actions svg, .gh-search svg, .gh-search-icon {
+                    color: #ffffff !important; stroke: #ffffff !important; fill: none !important;
+                }
+                h1, h2, h3, h4, h5, h6, p, span, a, li, blockquote, .post-content, .post-excerpt, .gh-content { 
+                    color: #ffffff !important; 
+                    transition: color 0.3s ease !important;
+                }
+                hr, .gh-head, .gh-foot { border-color: #333 !important; }
+                img { opacity: 0.95; transition: opacity 0.3s; }
+            `;
+
+            if(moonIcon) moonIcon.style.display = 'none';
+            if(sunIcon) sunIcon.style.display = 'block';
+        } else {
+            // LIGHT MODE RESET
+            body.style.removeProperty('background-color');
+            body.style.removeProperty('color');
+            
+            const oldStyle = document.getElementById("dark-mode-overrides");
+            if(oldStyle) oldStyle.remove();
+            
+            if(moonIcon) moonIcon.style.display = 'block';
+            if(sunIcon) sunIcon.style.display = 'none';
+        }
+        
+        // Remove the transition style after it finishes to keep the DOM clean
+        setTimeout(() => { body.style.transition = ""; }, 350);
+    }
+
+    function toggleDarkMode() {
+        const currentlyDark = localStorage.getItem('kg-darkMode') === 'true';
+        const newState = !currentlyDark;
+        localStorage.setItem('kg-darkMode', newState);
+        applyTheme(newState);
+    }
+
+    (function() {
+        const savedState = localStorage.getItem('kg-darkMode') === 'true';
+        // Apply immediately without transition on first load
+        applyTheme(savedState);
+    })();
+
+    window.addEventListener('scroll', () => {
+        const btn = document.getElementById('my-unique-theme-toggle');
+        if(btn) btn.style.top = Math.max(120 - window.scrollY, 20) + 'px';
+    });
+</script>
+
+<style>
+#my-unique-theme-toggle {
+    position: fixed !important;
+    right: 20px;
+    top: 120px;
+    z-index: 10000; 
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+}
+#my-unique-theme-toggle svg { display: block; }
+
+/* Global transition to ensure Light Mode switch is also smooth */
+body { transition: background-color 0.3s ease, color 0.3s ease; }
+</style>
