@@ -1,0 +1,125 @@
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const siteFooter = document.querySelector(".gh-footer-inner, .gh-footer") || document.body;
+
+    // Inject styles automatically so the header remains untouched
+    const style = document.createElement("style");
+    style.innerHTML = `
+      .button-wall {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        margin: 20px auto;
+        width: 100%;
+      }
+      .basenamering {
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        gap: 12px;
+        padding: 5px 14px;
+        border: 1px solid rgba(128, 128, 128, 0.35);
+        border-radius: 4px;
+        font-family: monospace;
+        font-size: 0.9rem;
+        letter-spacing: 0.05em;
+      }
+      .basenamering a {
+        text-decoration: none;
+        font-weight: bold;
+        transition: transform 0.15s ease, opacity 0.15s ease;
+      }
+      .basenamering a:hover {
+        opacity: 0.75;
+        transform: scale(1.1);
+      }
+      .button-row {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+      }
+      .button-row:hover a {
+        opacity: 0.75;
+      }
+      .button-row a {
+        display: inline-block;
+        line-height: 0;
+        border: none !important;
+        box-shadow: none !important;
+        transition: transform 0.15s ease, opacity 0.15s ease, filter 0.15s ease;
+      }
+      .button-row a:hover {
+        opacity: 1 !important;
+        transform: translateY(-2px) scale(1.08);
+        filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.25));
+        z-index: 2;
+      }
+      .button-row img {
+        width: 88px;
+        height: 31px;
+        image-rendering: pixelated;
+        margin: 0 !important;
+      }
+      .button-row .emoji-badge {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 88px;
+        height: 31px;
+        background: rgba(128, 128, 128, 0.15);
+        border: 1px dashed rgba(128, 128, 128, 0.4);
+        border-radius: 4px;
+        font-size: 16px;
+        text-decoration: none;
+        margin: 0 !important;
+        box-sizing: border-box;
+      }
+    `;
+    document.head.appendChild(style);
+
+    // Create and append the button wall container
+    const wall = document.createElement("div");
+    wall.className = "button-wall";
+    wall.innerHTML = `
+      <div class="basenamering">
+        <a href="https://webring.julimiro.eu/api/previous/electronenclave.com" title="Previous site in Basename Webring">&lt;</a>
+        <a href="https://webring.julimiro.eu/" target="_blank" rel="noopener">BASENAMERING</a>
+        <a href="https://webring.julimiro.eu/api/next/electronenclave.com" title="Next site in Basename Webring">&gt;</a>
+      </div>
+      <div class="button-row">
+        <a href="https://wah.moe/" target="_blank" rel="noopener" title="wah.moe">
+          <img src="https://wah.moe/images/buttons/wah.png" alt="wah.moe">
+        </a>
+
+        <a href="https://sillydomain.name/" target="_blank" rel="noopener" title="sillydomain.name">
+          <img src="https://sillydomain.name/assets/buttons/benjae.png" alt="sillydomain.name">
+        </a>
+
+        <a href="https://eightyeightthirty.one/" target="_blank" rel="noopener" title="eightyeightthirty.one">
+          <img src="https://breq.dev/badges/eightyeightthirtyone.png" alt="eightyeightthirtyone button">
+        </a>
+
+        <a href="https://aliceisvery.gay/" target="_blank" rel="noopener" title="aliceisvery.gay">
+          <img src="https://aliceisvery.gay/Assets/Images/Page/index/buttons/1024.gif" alt="aliceisvery.gay">
+        </a>
+
+        <a href="https://minxie.likesyou.org/webring/" target="_blank" rel="noopener" title="A Tism-Webring">
+          <img src="https://minxie.likesyou.org/webring/tism-ring.gif" alt="A Tism-Webring">
+        </a>
+
+        <a href="https://purplepanda.cc/" target="_blank" rel="noopener" title="purplepanda.cc">
+          <span class="emoji-badge">🐼</span>
+        </a>
+
+        <!-- Copy and paste this block for more buttons -->
+        <a href="https://example.com" target="_blank" rel="noopener" title="Site Name">
+          <img src="https://example.com/button.gif" alt="Site Name">
+        </a>
+      </div>
+    `;
+    siteFooter.appendChild(wall);
+  });
+</script>
